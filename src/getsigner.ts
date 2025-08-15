@@ -9,7 +9,7 @@ import {
 import evm from '@wormhole-foundation/sdk/evm';
 import solana from '@wormhole-foundation/sdk/solana';
 import { config } from 'dotenv';
-config(); 
+config();
 
 export interface SignerStuff<N extends Network, C extends Chain> {
   chain: ChainContext<N, C>;
@@ -24,16 +24,14 @@ const CHAIN_ENV_KEYS = {
   'Optimism': 'OPTIMISM_PRIVATE_KEY',
   'Polygon': 'POLYGON_PRIVATE_KEY',
   'Avalanche': 'AVALANCHE_PRIVATE_KEY',
-  
   'Sepolia': 'SEPOLIA_PRIVATE_KEY',
   'BaseSepolia': 'BASE_SEPOLIA_PRIVATE_KEY',
   'ArbitrumSepolia': 'ARBITRUM_SEPOLIA_PRIVATE_KEY', 
   'OptimismSepolia': 'OPTIMISM_SEPOLIA_PRIVATE_KEY',
   'PolygonMumbai': 'POLYGON_MUMBAI_PRIVATE_KEY',
   'AvalancheFuji': 'AVALANCHE_FUJI_PRIVATE_KEY',
-  
-  'Solana': 'SOLANA_PRIVATE_KEY', 
-  'SolanaDevnet': 'SOLANA_DEVNET_PRIVATE_KEY', 
+  'Solana': 'SOLANA_PRIVATE_KEY',
+  'SolanaDevnet': 'SOLANA_DEVNET_PRIVATE_KEY',
 } as const;
 
 
@@ -43,7 +41,6 @@ function getEnvForChain(chainName: string, platform: string): string {
   if (chainSpecificKey && process.env[chainSpecificKey]) {
     return process.env[chainSpecificKey]!;
   }
-
 
 
   const suggestedKey = chainSpecificKey || `${chainName.toUpperCase()}_PRIVATE_KEY`;
@@ -64,7 +61,9 @@ function validatePrivateKey(privateKey: string, platform: string, chainName: str
       break;
     
     case 'Solana':
+      // Solana private key should be base58 encoded or JSON array
       if (privateKey.startsWith('[') && privateKey.endsWith(']')) {
+        // JSON array format [1,2,3,...]
         try {
           const keyArray = JSON.parse(privateKey);
           if (!Array.isArray(keyArray) || keyArray.length !== 64) {
@@ -74,8 +73,9 @@ function validatePrivateKey(privateKey: string, platform: string, chainName: str
           throw new Error(`Invalid JSON format for Solana private key for ${chainName}`);
         }
       } else {
+        // Base58 format - basic length check (Solana keys are typically 87-88 chars in base58)
         if (privateKey.length < 80 || privateKey.length > 90) {
-          console.warn(`Solana private key for ${chainName} has unusual length. Ensure it's valid base58.`);
+          console.warn(`⚠️  Solana private key for ${chainName} has unusual length. Ensure it's valid base58.`);
         }
       }
       break;
@@ -122,9 +122,10 @@ export async function getSigner<N extends Network, C extends Chain>(
     };
 
   } catch (error) {
-    console.error(`Failed to create signer for ${chainName}:`, error);
+    console.error(`❌ Failed to create signer for ${chainName}:`, error);
     throw new Error(`Signer creation failed for ${chainName}: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }
 }
+
 
 export type SupportedChain = keyof typeof CHAIN_ENV_KEYS;
