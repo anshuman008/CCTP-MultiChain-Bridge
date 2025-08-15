@@ -213,36 +213,6 @@ Each chain has detailed configuration including:
 5. **Mint**: USDC is minted on the destination chain
 6. **Completion**: Transfer status and transaction details returned
 
-## 🐛 Troubleshooting
-
-### Common Issues
-
-#### 1. Private Key Format Errors
-```
-Error: Invalid Solana private key format. Contains invalid characters: _, l, _, _, _
-```
-**Solution**: Ensure your private keys contain only valid characters:
-- EVM: 64 hex characters
-- Solana: Base58 characters only (no underscores, hyphens, or special chars)
-
-#### 2. Missing Environment Variables
-```
-Error: Missing private key for Solana. Please set environment variable: SOLANA_PRIVATE_KEY
-```
-**Solution**: Check your `.env` file and ensure all required private keys are set
-
-#### 3. Chain Validation Errors
-```
-Error: Cannot bridge between mainnet and testnet
-```
-**Solution**: Use consistent network types (either all testnet or all mainnet)
-
-#### 4. RPC Connection Issues
-```
-Error: Failed to create signer for Solana
-```
-**Solution**: Check network connectivity and RPC endpoint availability
-
 ### Debug Mode
 
 Use the debug script to troubleshoot chain configurations:
@@ -284,14 +254,6 @@ cctp-multichain-bridge/
 ├── .env                     # Environment variables (create this)
 └── README.md               # This file
 ```
-
-## 🔒 Security Considerations
-
-- **Private Keys**: Never commit private keys to version control
-- **Environment Variables**: Use `.env` files for sensitive data
-- **Network Validation**: Always validate chain compatibility before transfers
-- **Error Handling**: Implement proper error handling for production use
-- **Rate Limiting**: Consider implementing rate limiting for high-frequency transfers
 
 ## 🤝 Contributing
 
