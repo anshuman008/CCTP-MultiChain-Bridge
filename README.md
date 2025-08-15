@@ -1,4 +1,4 @@
-# CCPT-CROSS-CHAIN-BRIDGING
+# CCTP-MultiChain-Bridge
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
@@ -70,7 +70,7 @@ A robust, production-ready cross-chain bridge implementation using **Wormhole SD
 1. **Clone the repository**
 ```bash
 git clone <repository-url>
-cd ccpt-mutichain-bridge
+cd cctp-multichain-bridge
 ```
 
 2. **Install dependencies**
@@ -272,7 +272,7 @@ const bridge = new MultiChainCCTPBridge(false); // false = mainnet
 ## 📁 Project Structure
 
 ```
-ccpt-mutichain-bridge/
+cctp-multichain-bridge/
 ├── src/
 │   ├── index.ts              # Main entry point
 │   ├── multi-chain-bridge.ts # Core bridge implementation
