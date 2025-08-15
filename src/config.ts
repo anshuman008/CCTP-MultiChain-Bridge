@@ -19,6 +19,7 @@ export const CCTP_SUPPORTED_CHAINS = {
   SOLANA: 'Solana' as Chain, 
 } as const;
 
+
 export const CHAIN_CONFIGS = {
   [CCTP_SUPPORTED_CHAINS.ETHEREUM]: {
     name: 'Ethereum Mainnet',
